@@ -1,0 +1,203 @@
+.contact {
+  padding: clamp(96px, 12vw, 150px) 0 clamp(72px, 9vw, 120px);
+  overflow: hidden;
+}
+
+.contact__inner {
+  width: min(100% - 2 * var(--gutter), var(--max-width));
+  margin: 0 auto;
+}
+
+/* Palabra gigante en crema, casi todo el ancho */
+.contact__word {
+  font-size: clamp(3rem, 18.6vw, 16.4rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--brand-cream);
+  white-space: nowrap;
+  margin-left: -0.04em;
+  user-select: none;
+}
+
+/* Panel amarillo desplazado a la derecha, montado sobre la parte baja de la palabra */
+.contact__panel {
+  position: relative;
+  width: min(100%, 760px);
+  margin: calc(clamp(3rem, 18.6vw, 16.4rem) * -0.32) 0 0 auto;
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--brand-yellow);
+  color: var(--brand-green);
+  border-radius: 4px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.5);
+}
+
+.contact__eyebrow {
+  margin-bottom: 28px;
+}
+
+.contact__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 32px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field label {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+}
+
+/* Campos solo con línea inferior */
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1.5px solid var(--brand-green);
+  border-radius: 0;
+  background: transparent;
+  color: var(--brand-green);
+  font-size: 1rem;
+  color-scheme: light;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.field select {
+  padding-right: 28px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231f3f1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+}
+
+.field select option {
+  color: #1f3f1f;
+  background: #ffffff;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  box-shadow: 0 1.5px 0 0 var(--brand-green);
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--brand-green);
+  outline-offset: 4px;
+}
+
+.field [aria-invalid='true'] {
+  border-bottom-width: 3px;
+}
+
+.field__error {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-bold);
+}
+
+.field__error::before {
+  content: '! ';
+}
+
+.contact__footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.contact__status {
+  flex: 1 1 260px;
+  font-weight: var(--weight-bold);
+  font-size: 0.9375rem;
+}
+
+/* Botón con contorno verde, abajo a la derecha del panel */
+.btn.btn--outline {
+  margin-left: auto;
+  background: transparent;
+  color: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.btn.btn--outline:hover:not(:disabled) {
+  background: var(--brand-green);
+  color: var(--brand-yellow);
+}
+
+.btn--outline:focus-visible {
+  outline-color: var(--brand-green);
+}
+
+.btn--outline:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* Redes: círculos con contorno crema, alineados a la derecha */
+.contact__social {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+}
+
+.contact__social a {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--brand-cream);
+  border-radius: 50%;
+  color: var(--brand-cream);
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+
+.contact__social a:hover {
+  background: var(--brand-cream);
+  color: var(--brand-green);
+}
+
+@media (max-width: 720px) {
+  .contact__form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__panel {
+    margin-top: calc(clamp(3rem, 18.6vw, 16.4rem) * -0.18);
+  }
+}

@@ -1,0 +1,98 @@
+export type Lang = 'es' | 'en';
+
+// Las etiquetas del menú son iguales en ambos idiomas (sección 3).
+export const NAV = [
+  { id: 'home', label: 'HOME' },
+  { id: 'about', label: 'ABOUT' },
+  { id: 'cars', label: 'CARS' },
+  { id: 'contact', label: 'CONTACT' },
+] as const;
+
+export const strings = {
+  es: {
+    skipToContent: 'Saltar al contenido',
+    langSwitch: 'Cambiar idioma',
+    themeToDark: 'Activar modo oscuro',
+    themeToLight: 'Activar modo claro',
+    openMenu: 'Abrir menú',
+    closeMenu: 'Cerrar menú',
+    aboutTitle: 'Nacimos en Pérez Zeledón.',
+    aboutP1:
+      'MRS Rent a Car nació en Pérez Zeledón para ofrecer una forma directa y confiable de moverse por la zona sur.',
+    aboutP2:
+      'Ya sea para recorrer San Isidro, subir hacia el Chirripó o adentrarse en la costa del Pacífico, brindamos vehículos en óptimas condiciones y un trato sin complicaciones.',
+    aboutP3:
+      'Conocemos los caminos del cantón y respaldamos cada viaje con atención local, puntualidad y la transparencia que necesitas para manejar con tranquilidad.',
+    aboutCta: 'Ver vehículos',
+    aboutImageAlt: 'Suzuki Grand Vitara de MRS Rent a Car',
+    carsTitle: 'Nuestros vehículos',
+    carsCta: 'Solicitar por WhatsApp',
+    carsPrev: 'Vehículo anterior',
+    carsNext: 'Vehículo siguiente',
+    carsHint: 'Usa las flechas del teclado o arrastra para cambiar de vehículo.',
+    contactEyebrow: 'ESCRÍBENOS',
+    fieldName: 'Nombre completo',
+    fieldNationality: 'Nacionalidad',
+    fieldVehicle: 'Vehículo',
+    fieldFrom: 'Desde',
+    fieldTo: 'Hasta',
+    fieldMessage: 'Mensaje',
+    selectPlaceholder: 'Selecciona una opción',
+    vehicleAny: 'Aún no lo sé',
+    required: 'obligatorio',
+    send: 'Enviar',
+    sending: 'Enviando…',
+    sent: '¡Gracias! Recibimos tu mensaje y te responderemos pronto.',
+    sendError: 'No pudimos enviar el mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.',
+    errorName: 'Escribe tu nombre completo.',
+    errorNationality: 'Selecciona tu nacionalidad.',
+    errorDates: 'La fecha "Hasta" debe ser igual o posterior a "Desde".',
+    footerPlace: 'Pérez Zeledón, Costa Rica',
+    footerSections: 'Secciones',
+    footerContact: 'Contacto',
+  },
+  en: {
+    skipToContent: 'Skip to content',
+    langSwitch: 'Change language',
+    themeToDark: 'Switch to dark mode',
+    themeToLight: 'Switch to light mode',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    aboutTitle: 'Born in Pérez Zeledón.',
+    aboutP1:
+      'MRS Rent a Car was born in Pérez Zeledón to offer a direct and reliable way to get around the southern zone.',
+    aboutP2:
+      'Whether you are exploring San Isidro, heading up to Chirripó or venturing into the Pacific coast, we provide vehicles in excellent condition and hassle-free service.',
+    aboutP3:
+      'We know the roads of the canton and back every trip with local support, punctuality and the transparency you need to drive with peace of mind.',
+    aboutCta: 'See vehicles',
+    aboutImageAlt: 'MRS Rent a Car Suzuki Grand Vitara',
+    carsTitle: 'Our vehicles',
+    carsCta: 'Request on WhatsApp',
+    carsPrev: 'Previous vehicle',
+    carsNext: 'Next vehicle',
+    carsHint: 'Use the arrow keys or drag to change vehicle.',
+    contactEyebrow: 'WRITE TO US',
+    fieldName: 'Full name',
+    fieldNationality: 'Nationality',
+    fieldVehicle: 'Vehicle',
+    fieldFrom: 'From',
+    fieldTo: 'To',
+    fieldMessage: 'Message',
+    selectPlaceholder: 'Select an option',
+    vehicleAny: 'Not sure yet',
+    required: 'required',
+    send: 'Send',
+    sending: 'Sending…',
+    sent: 'Thank you! We received your message and will reply soon.',
+    sendError: "We couldn't send your message. Please try again or write to us on WhatsApp.",
+    errorName: 'Please enter your full name.',
+    errorNationality: 'Please select your nationality.',
+    errorDates: 'The "To" date must be the same as or after "From".',
+    footerPlace: 'Pérez Zeledón, Costa Rica',
+    footerSections: 'Sections',
+    footerContact: 'Contact',
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+export type Strings = (typeof strings)['es'];

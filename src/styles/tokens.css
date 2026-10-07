@@ -1,0 +1,69 @@
+/*
+ * Tokens de marca (sección 3 de la especificación).
+ * Los valores de marca son fijos; los tokens semánticos cambian con el tema.
+ */
+:root {
+  /* Marca */
+  --brand-green: #1f3f1f;
+  --brand-yellow: #ffd401;
+  --brand-cream: #eae3d2;
+  --brand-white: #ffffff;
+
+  /* Tipografía */
+  --font-sans: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-bold: 700;
+
+  /* Superficies claras (About, Cars) */
+  --surface-light: var(--brand-white);
+  --on-light: var(--brand-green);
+  --on-light-muted: rgba(31, 63, 31, 0.72);
+
+  /* Superficies oscuras (Hero, Contact) */
+  --surface-dark: var(--brand-green);
+  --on-dark: var(--brand-white);
+  --on-dark-detail: var(--brand-cream);
+
+  /* Acento: sobre amarillo siempre va verde */
+  --accent: var(--brand-yellow);
+  --on-accent: var(--brand-green);
+
+  /* Líneas y foco */
+  --hairline-light: rgba(31, 63, 31, 0.18);
+  --hairline-dark: rgba(234, 227, 210, 0.28);
+  --focus-ring: var(--brand-yellow);
+
+  /* Espaciado y forma */
+  --gutter: clamp(16px, 4vw, 48px);
+  --max-width: 1240px;
+  --radius-pill: 999px;
+  --tap: 44px;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur-med: 420ms;
+  --dur-slow: 700ms;
+
+  color-scheme: light;
+}
+
+/*
+ * Modo oscuro (propuesta para aprobación de Mariella):
+ * los fondos claros pasan a verde muy oscuro, el texto a crema
+ * y el amarillo se mantiene como acento.
+ */
+:root[data-theme='dark'] {
+  --surface-light: #0f1f0f;
+  --on-light: var(--brand-cream);
+  --on-light-muted: rgba(234, 227, 210, 0.74);
+
+  --surface-dark: #142a14;
+  --on-dark: var(--brand-cream);
+  --on-dark-detail: var(--brand-cream);
+
+  --hairline-light: rgba(234, 227, 210, 0.2);
+  --hairline-dark: rgba(234, 227, 210, 0.24);
+
+  color-scheme: dark;
+}

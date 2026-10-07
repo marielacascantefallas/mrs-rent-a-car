@@ -1,0 +1,124 @@
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 16px var(--gutter) max(24px, env(safe-area-inset-bottom));
+  border: 0;
+  border-radius: 0;
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-med) var(--ease-out),
+    visibility 0s linear var(--dur-med);
+}
+
+/* Más tinte que el header: el texto gigante debe leerse sobre cualquier sección. */
+.menu.glass[data-tone='dark'] {
+  --glass-bg: rgba(31, 63, 31, 0.78);
+}
+
+:root[data-theme='dark'] .menu.glass[data-tone='dark'] {
+  --glass-bg: rgba(15, 31, 15, 0.82);
+}
+
+.menu[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--dur-med) var(--ease-out),
+    visibility 0s;
+}
+
+.menu__top,
+.menu__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+}
+
+.menu__top {
+  padding-left: 12px;
+}
+
+.menu__nav {
+  display: grid;
+  align-content: center;
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+}
+
+.menu__nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu__nav li {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i) * 60ms + 80ms);
+}
+
+.menu[data-open='true'] .menu__nav li {
+  opacity: 1;
+  transform: none;
+}
+
+.menu__nav a {
+  display: inline-block;
+  font-size: clamp(3.25rem, 13vw, 9.5rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color var(--dur-fast) ease;
+}
+
+.menu__nav a:hover,
+.menu__nav a:focus-visible {
+  color: var(--brand-yellow);
+}
+
+.menu__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+}
+
+.menu__social {
+  display: flex;
+  gap: 4px;
+}
+
+.menu__social a {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+}
+
+.menu__whatsapp:hover,
+.menu__social a:hover {
+  color: var(--brand-yellow);
+}
+
+/* Bajo contraste de altura (móvil horizontal) */
+@media (max-height: 520px) {
+  .menu__nav a {
+    font-size: clamp(2rem, 11vh, 4rem);
+  }
+}

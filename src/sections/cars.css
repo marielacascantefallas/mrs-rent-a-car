@@ -1,0 +1,221 @@
+.section.cars {
+  --slide-w: min(62vw, 980px, 88svh);
+  --gap: clamp(24px, 4vw, 64px);
+  background: var(--cars-bg, var(--surface-light));
+  transition: background-color 700ms ease;
+  padding: clamp(96px, 10vw, 120px) 0 clamp(72px, 8vw, 110px);
+  overflow: hidden;
+}
+
+.cars__stage {
+  position: relative;
+}
+
+/* Flechas para ir al anterior o al siguiente, a la altura del auto */
+.cars__arrow {
+  position: absolute;
+  top: 58%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid var(--car-ink);
+  background: color-mix(in srgb, var(--cars-bg) 70%, transparent);
+  color: var(--car-ink);
+  transform: translateY(-50%);
+  transition:
+    background-color 700ms ease,
+    color 700ms ease,
+    border-color 700ms ease;
+}
+
+.cars__arrow:hover {
+  background: var(--car-ink);
+  color: var(--cars-bg);
+}
+
+.cars__arrow:focus-visible {
+  outline-color: var(--car-ink);
+}
+
+.cars__arrow--prev {
+  left: max(var(--gutter), calc(50% - var(--slide-w) / 2 - 26px));
+}
+
+.cars__arrow--next {
+  right: max(var(--gutter), calc(50% - var(--slide-w) / 2 - 26px));
+}
+
+/* Todos los vehículos ocupan la misma celda; cada uno se desplaza con su posición. */
+.cars__viewport {
+  display: grid;
+  justify-items: center;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cars__viewport[data-dragging='true'] {
+  cursor: grabbing;
+}
+
+.cars__viewport:focus-visible {
+  outline: 2px solid var(--on-light);
+  outline-offset: -6px;
+}
+
+.car {
+  grid-area: 1 / 1;
+  width: var(--slide-w);
+  display: grid;
+  justify-items: center;
+  transform: translateX(calc(var(--p) * (var(--slide-w) + var(--gap)) + var(--drag, 0px)))
+    scale(0.84);
+  opacity: 0.38;
+  transition:
+    transform 650ms var(--ease-out),
+    opacity 650ms var(--ease-out);
+  /* Tamaño del nombre gigante: llena el ancho según el número de letras. */
+  --name-size: min(calc(var(--slide-w) * 1.36 / var(--chars)), calc(var(--slide-w) * 0.24));
+}
+
+.car[data-active='true'] {
+  transform: translateX(var(--drag, 0px));
+  opacity: 1;
+  z-index: 1;
+}
+
+.car[data-active='false'] {
+  cursor: pointer;
+}
+
+.cars__viewport[data-dragging='true'] .car {
+  transition: none;
+}
+
+/* El que da la vuelta de un borde al otro reaparece sin cruzar la pantalla. */
+.car[data-wrapped='true'] {
+  transition: none;
+  animation: car-wrap 650ms var(--ease-out);
+}
+
+@keyframes car-wrap {
+  from {
+    opacity: 0;
+  }
+}
+
+.car__name {
+  grid-area: 1 / 1;
+  align-self: start;
+  font-size: var(--name-size);
+  font-weight: var(--weight-bold);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  /* Cada nombre en el tono de su auto (contraste ≥ 5.5:1 sobre cualquiera de los fondos) */
+  color: var(--name-ink);
+  transition: color 700ms ease;
+  pointer-events: none;
+}
+
+/* La foto se monta sobre la parte baja del texto. */
+.car__img {
+  grid-area: 1 / 1;
+  width: 86%;
+  height: auto;
+  margin-top: calc(var(--name-size) * 0.36);
+  pointer-events: none;
+  filter: drop-shadow(0 26px 24px rgba(31, 63, 31, 0.2));
+}
+
+/* Botón de WhatsApp en el tono del auto; el texto usa el color del fondo. */
+.cars__cta {
+  background: var(--car-ink);
+  color: var(--cars-bg);
+  box-shadow: 0 10px 24px -14px var(--car-ink);
+  transition:
+    background-color 700ms ease,
+    color 700ms ease,
+    transform var(--dur-fast) ease;
+}
+
+.cars__cta:hover {
+  transform: translateY(-1px);
+}
+
+.cars__cta:focus-visible {
+  outline-color: var(--car-ink);
+}
+
+.cars__info {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  margin-top: clamp(8px, 2vw, 24px);
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+
+.cars__details {
+  display: grid;
+  gap: 4px;
+  animation: cars-details-in 500ms var(--ease-out);
+}
+
+@keyframes cars-details-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.cars__model {
+  color: var(--car-ink);
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.cars__specs,
+.cars__price {
+  font-size: 0.9375rem;
+}
+
+.cars__price {
+  font-weight: var(--weight-bold);
+}
+
+@media (max-width: 700px) {
+  .section.cars {
+    --slide-w: 74vw;
+    --gap: 0px;
+  }
+
+  .car__img {
+    width: 100%;
+  }
+
+  .cars__arrow {
+    width: 44px;
+    height: 44px;
+    top: 62%;
+  }
+
+  .cars__arrow--prev {
+    left: 8px;
+  }
+
+  .cars__arrow--next {
+    right: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .car,
+  .cars {
+    transition: none;
+  }
+}

@@ -1,0 +1,21 @@
+.logo {
+  position: relative;
+  aspect-ratio: 2000 / 1444;
+  display: inline-block;
+  flex: none;
+}
+
+.logo__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity var(--dur-med) ease;
+  user-select: none;
+}
+
+.logo__img[data-active='true'] {
+  opacity: 1;
+}
