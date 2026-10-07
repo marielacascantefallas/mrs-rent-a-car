@@ -1,0 +1,26 @@
+/*
+ * Scroll con capas (solo escritorio, ver src/components/layers.ts).
+ * Todo vive bajo .layers-on: en móvil no queda ningún resto del efecto.
+ */
+.layers-on .layer {
+  position: sticky;
+  top: var(--stick-top, 0px);
+  z-index: var(--layer);
+}
+
+/* Sombra suave en el borde superior: refuerza la sensación de capa encima. */
+.layers-on .layer + .layer {
+  box-shadow: 0 -24px 48px -24px rgba(0, 0, 0, 0.28);
+}
+
+/* Entrada sutil del contenido (el fondo queda opaco para tapar la anterior). */
+.layers-on .layer > * {
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+
+.layers-on .layer:not(.is-in) > * {
+  opacity: 0;
+  transform: translateY(40px) scale(0.985);
+}

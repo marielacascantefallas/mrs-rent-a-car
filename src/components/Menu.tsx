@@ -4,6 +4,7 @@ import { FACEBOOK_URL, INSTAGRAM_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from '../
 import { NAV } from '../i18n/strings';
 import { useLanguage } from '../i18n/LanguageContext';
 import { BrandIcon } from './BrandIcon';
+import { scrollToSection } from './layers';
 import { Logo } from './Logo';
 import { CloseIcon } from './icons';
 import './menu.css';
@@ -58,11 +59,9 @@ export function Menu({ open, onClose }: MenuProps) {
   const goTo = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
-    // Espera a que se libere el scroll antes de desplazarse.
-    requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', `#${id}`);
-    });
+    // Libera el scroll ya (el efecto de cierre corre después) y luego se desplaza.
+    document.body.classList.remove('is-locked');
+    requestAnimationFrame(() => scrollToSection(id));
   };
 
   return createPortal(
