@@ -6,7 +6,7 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/mrsrentacar/';
 export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595193861694';
 export const EMAIL = 'rentacarmrs@gmail.com';
 // Ficha de Google Business Profile
-export const GOOGLE_PROFILE_URL = 'https://share.google/fnAbP3dSMWdWMKQ7z';
+export const GOOGLE_PROFILE_URL = 'https://share.google/x61BuwrLbr28BBi4W';
 // Código de verificación de Google Search Console (método "Etiqueta HTML"): solo el valor de content.
 export const GOOGLE_SITE_VERIFICATION = '';
 
