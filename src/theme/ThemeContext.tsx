@@ -5,6 +5,7 @@ export type Theme = 'light' | 'dark';
 const STORAGE_KEY = 'mrs-theme';
 
 function readInitialTheme(): Theme {
+  if (typeof document === 'undefined') return 'light';
   // index.html ya resolvió el tema antes de pintar (preferencia guardada o del sistema).
   const attr = document.documentElement.getAttribute('data-theme');
   return attr === 'dark' ? 'dark' : 'light';

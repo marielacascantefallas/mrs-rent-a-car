@@ -119,7 +119,11 @@
   transition: opacity var(--dur-fast) ease;
 }
 
-.lang__opt[aria-pressed='true'],
+.lang__opt {
+  text-decoration: none;
+}
+
+.lang__opt[aria-current='true'],
 .lang__opt:hover {
   opacity: 1;
 }

@@ -98,8 +98,9 @@ export function Contact() {
   return (
     <section id="contact" className="section section--dark contact" data-bg="dark">
       <div className="contact__inner">
-        <h2 className="contact__word" aria-label="Contact">
-          CONTACT
+        <h2 className="contact__word">
+          <span aria-hidden="true">CONTACT</span>
+          <span className="visually-hidden">{t.contactTitle}</span>
         </h2>
 
         {/* Para el header, el panel amarillo pide contenido verde. */}

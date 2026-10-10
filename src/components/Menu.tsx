@@ -64,6 +64,9 @@ export function Menu({ open, onClose }: MenuProps) {
     requestAnimationFrame(() => scrollToSection(id));
   };
 
+  // En el HTML pregenerado no hay body: el menú se monta solo en el navegador.
+  if (typeof document === 'undefined') return null;
+
   return createPortal(
     <div
       id="site-menu"

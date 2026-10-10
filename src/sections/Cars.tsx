@@ -136,7 +136,7 @@ export function Cars() {
                 <img
                   className="car__img"
                   src={c.image}
-                  alt={isActive ? c.name : ''}
+                  alt={isActive ? t.carImageAlt.replace('{car}', c.name) : ''}
                   width={1500}
                   height={1000}
                   draggable={false}

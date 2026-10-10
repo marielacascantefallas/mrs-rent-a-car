@@ -45,7 +45,9 @@ export function Transport() {
                 <p className="transport__text">{text}</p>
                 <p className="transport__price">
                   {price}
-                  <span className="transport__currency">USD</span>
+                  <span className="transport__currency">
+                    USD <span className="transport__unit">{t.transportUnit}</span>
+                  </span>
                 </p>
                 <a
                   className="btn transport__cta"

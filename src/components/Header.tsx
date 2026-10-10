@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { LANG_PATH } from '../seo';
 import { useTheme } from '../theme/ThemeContext';
 import { Logo } from './Logo';
 import { Menu } from './Menu';
@@ -31,25 +32,37 @@ export function Header() {
         </a>
         <div className="header__controls">
           <div className="lang" role="group" aria-label={t.langSwitch}>
-            <button
-              type="button"
+            <a
+              href={LANG_PATH.es}
+              hrefLang="es"
+              lang="es"
               className="lang__opt"
-              aria-pressed={lang === 'es'}
-              onClick={() => setLang('es')}
+              aria-current={lang === 'es' ? 'true' : undefined}
+              aria-label="Español"
+              onClick={(e) => {
+                e.preventDefault();
+                setLang('es');
+              }}
             >
               ES
-            </button>
+            </a>
             <span aria-hidden="true" className="lang__sep">
               /
             </span>
-            <button
-              type="button"
+            <a
+              href={LANG_PATH.en}
+              hrefLang="en"
+              lang="en"
               className="lang__opt"
-              aria-pressed={lang === 'en'}
-              onClick={() => setLang('en')}
+              aria-current={lang === 'en' ? 'true' : undefined}
+              aria-label="English"
+              onClick={(e) => {
+                e.preventDefault();
+                setLang('en');
+              }}
             >
               EN
-            </button>
+            </a>
           </div>
           <button
             type="button"

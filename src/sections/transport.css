@@ -84,6 +84,10 @@
   letter-spacing: 0.16em;
 }
 
+.transport__unit {
+  text-transform: uppercase;
+}
+
 /* Verde con texto amarillo: contraste alto sobre el fondo amarillo. */
 .btn.transport__cta {
   align-self: flex-start;

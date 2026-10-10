@@ -161,8 +161,11 @@ export function Hero() {
         </div>
       </div>
       <div className="hero__logo">
-        <h1 className="visually-hidden">MRS Rent a Car</h1>
         <Logo tone="dark" className="hero__logo-img" decorative />
+        <h1 className="hero__tagline">
+          <span className="visually-hidden">MRS Rent a Car · </span>
+          {t.heroTagline}
+        </h1>
         <div className="hero__actions">
           <a href="#cars" className="btn btn--accent">
             <span>{t.heroCta}</span>

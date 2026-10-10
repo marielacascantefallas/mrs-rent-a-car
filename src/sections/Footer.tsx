@@ -52,7 +52,8 @@ export function Footer() {
   const ref = useRef<HTMLElement>(null);
   const near = useNear(ref);
   const [still] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    () =>
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
 
   return (
