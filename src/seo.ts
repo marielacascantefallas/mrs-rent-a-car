@@ -1,4 +1,13 @@
-import { EMAIL, FACEBOOK_URL, INSTAGRAM_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from './config';
+import {
+  EMAIL,
+  FACEBOOK_URL,
+  GOOGLE_PROFILE_URL,
+  GOOGLE_SITE_VERIFICATION,
+  INSTAGRAM_URL,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+} from './config';
+import { faqs } from './data/faq';
 import { CARS } from './data/cars';
 import { TRANSPORT_OPTIONS } from './data/transport';
 import { strings, type Lang } from './i18n/strings';
@@ -17,14 +26,14 @@ const SEO = {
   es: {
     title: 'MRS Rent a Car | Alquiler de carros en Pérez Zeledón, zona sur',
     description:
-      'Rent a car en Pérez Zeledón y la zona sur de Costa Rica: 4x4 y sedán desde $70 por día, y transporte privado al aeropuerto desde $190 por viaje. Reserva por WhatsApp.',
+      'Rent a car en Pérez Zeledón y la zona sur de Costa Rica: 4x4 y sedán desde $70 por día, sin tarjeta de crédito. Transporte privado al Aeropuerto Juan Santamaría desde $190 por viaje.',
     ogLocale: 'es_CR',
     ogImageAlt: 'MRS Rent a Car, alquiler de carros en Pérez Zeledón',
   },
   en: {
     title: 'MRS Rent a Car | Car Rental in Pérez Zeledón, Costa Rica',
     description:
-      "Car rental in Pérez Zeledón and Costa Rica's southern zone: 4x4 SUVs and a sedan from $70 per day, plus private airport transfers from $190 per trip. Book on WhatsApp.",
+      "Car rental in Pérez Zeledón and Costa Rica's southern zone: 4x4 SUVs and a sedan from $70 per day, no credit card needed. Private transfers to Juan Santamaría Airport from $190 per trip.",
     ogLocale: 'en_US',
     ogImageAlt: 'MRS Rent a Car, car rental in Pérez Zeledón',
   },
@@ -87,7 +96,9 @@ export function structuredData(lang: Lang) {
       url: WHATSAPP_URL,
       availableLanguage: ['Spanish', 'English'],
     },
-    sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
+    hasMap: GOOGLE_PROFILE_URL,
+    sameAs: [INSTAGRAM_URL, FACEBOOK_URL, GOOGLE_PROFILE_URL],
+    paymentAccepted: lang === 'es' ? 'Efectivo, transferencia bancaria' : 'Cash, bank transfer',
     makesOffer: [
       ...CARS.map((car) => ({
         '@type': 'Offer',
@@ -120,7 +131,7 @@ export function structuredData(lang: Lang) {
       })),
       ...TRANSPORT_OPTIONS.map((option) => ({
         '@type': 'Offer',
-        name: transportNames[option.id],
+        name: `${transportNames[option.id]} · ${t.transportAirport}`,
         priceCurrency: 'USD',
         price: option.usd,
         priceSpecification: {
@@ -132,7 +143,7 @@ export function structuredData(lang: Lang) {
         itemOffered: {
           '@type': 'Service',
           serviceType: lang === 'es' ? 'Transporte privado al aeropuerto' : 'Private airport transfer',
-          name: transportNames[option.id],
+          name: `${transportNames[option.id]} · ${t.transportAirport}`,
           description: transportTexts[option.id],
           areaServed: 'Pérez Zeledón',
           provider: { '@id': `${SITE_URL}/#business` },
@@ -162,7 +173,18 @@ export function structuredData(lang: Lang) {
     primaryImageOfPage: `${SITE_URL}/og-image.jpg`,
   };
 
-  return { '@context': 'https://schema.org', '@graph': [business, website, page] };
+  const faqPage = {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    inLanguage: lang,
+    mainEntity: faqs(lang).map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+
+  return { '@context': 'https://schema.org', '@graph': [business, website, page, faqPage] };
 }
 
 /** Etiquetas del <head> para cada idioma (se escriben en el HTML pregenerado). */
@@ -197,6 +219,9 @@ export function headTags(lang: Lang) {
     `<meta name="twitter:description" content="${escapeAttr(seo.description)}" />`,
     `<meta name="twitter:image" content="${SITE_URL}/og-image.jpg" />`,
     `<script type="application/ld+json">${json}</script>`,
+    ...(GOOGLE_SITE_VERIFICATION
+      ? [`<meta name="google-site-verification" content="${escapeAttr(GOOGLE_SITE_VERIFICATION)}" />`]
+      : []),
   ].join('\n    ');
 }
 
