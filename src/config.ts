@@ -8,7 +8,7 @@ export const EMAIL = 'rentacarmrs@gmail.com';
 // Ficha de Google Business Profile
 export const GOOGLE_PROFILE_URL = 'https://share.google/x61BuwrLbr28BBi4W';
 // Código de verificación de Google Search Console (método "Etiqueta HTML"): solo el valor de content.
-export const GOOGLE_SITE_VERIFICATION = '';
+export const GOOGLE_SITE_VERIFICATION = 'IEYq6756KJ_Acj0LNDHv2_9DyPn2CbWy_4e1lAXyBRo';
 
 export function whatsappMessageUrl(message: string) {
   return `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
