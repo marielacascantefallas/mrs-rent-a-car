@@ -3,11 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MRS Rent a Car · Pérez Zeledón</title>
+    <title>MRS Rent a Car · Alquiler de vehículos y transporte al aeropuerto en Pérez Zeledón</title>
     <meta
       name="description"
-      content="Alquiler de vehículos en Pérez Zeledón, zona sur de Costa Rica."
+      content="Alquiler de vehículos y transporte privado al aeropuerto en Pérez Zeledón (San Isidro de El General), zona sur de Costa Rica. Recogida o traslado al aeropuerto desde $190 e ida y vuelta por $380. Reserva por WhatsApp."
     />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MRS Rent a Car" />
+    <meta property="og:locale" content="es_CR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta
+      property="og:title"
+      content="MRS Rent a Car · Alquiler de vehículos y transporte al aeropuerto en Pérez Zeledón"
+    />
+    <meta
+      property="og:description"
+      content="Alquiler de vehículos y transporte privado al aeropuerto en Pérez Zeledón, zona sur de Costa Rica. Reserva por WhatsApp."
+    />
+    <meta name="twitter:card" content="summary" />
+    <!-- Datos estructurados para buscadores. Precios en sincronía con src/data/transport.ts y src/data/cars.ts -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AutoRental",
+        "name": "MRS Rent a Car",
+        "description": "Alquiler de vehículos y transporte privado al aeropuerto en Pérez Zeledón, zona sur de Costa Rica.",
+        "telephone": "+506 7107 7969",
+        "email": "rentacarmrs@gmail.com",
+        "priceRange": "$70 - $380",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Pérez Zeledón",
+          "addressRegion": "San José",
+          "addressCountry": "CR"
+        },
+        "areaServed": [
+          { "@type": "Place", "name": "Pérez Zeledón" },
+          { "@type": "Place", "name": "San Isidro de El General" },
+          { "@type": "Place", "name": "Zona sur de Costa Rica" }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/mrsrentacar/",
+          "https://www.facebook.com/profile.php?id=61595193861694"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Transporte privado al aeropuerto",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "price": "190",
+              "priceCurrency": "USD",
+              "itemOffered": {
+                "@type": "Service",
+                "serviceType": "Transporte privado",
+                "name": "Recogida en el aeropuerto",
+                "description": "Transporte privado desde el aeropuerto hasta Pérez Zeledón y la zona sur de Costa Rica."
+              }
+            },
+            {
+              "@type": "Offer",
+              "price": "190",
+              "priceCurrency": "USD",
+              "itemOffered": {
+                "@type": "Service",
+                "serviceType": "Transporte privado",
+                "name": "Traslado al aeropuerto",
+                "description": "Transporte privado desde Pérez Zeledón hasta el aeropuerto."
+              }
+            },
+            {
+              "@type": "Offer",
+              "price": "380",
+              "priceCurrency": "USD",
+              "itemOffered": {
+                "@type": "Service",
+                "serviceType": "Transporte privado",
+                "name": "Transporte al aeropuerto ida y vuelta",
+                "description": "Recogida en el aeropuerto y traslado de regreso desde Pérez Zeledón."
+              }
+            }
+          ]
+        }
+      }
+    </script>
     <meta name="theme-color" content="#1f3f1f" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -31,6 +111,17 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>MRS Rent a Car · Pérez Zeledón, Costa Rica</h1>
+      <p>Alquiler de vehículos en Pérez Zeledón: Suzuki Grand Vitara 2019, Hyundai Accent 2019 y Nissan Pathfinder 2004.</p>
+      <h2>Transporte privado al aeropuerto</h2>
+      <ul>
+        <li>Recogida en el aeropuerto: $190</li>
+        <li>Traslado al aeropuerto: $190</li>
+        <li>Ida y vuelta: $380</li>
+      </ul>
+      <p>Reservas por WhatsApp: <a href="https://wa.me/50671077969">+506 7107 7969</a></p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

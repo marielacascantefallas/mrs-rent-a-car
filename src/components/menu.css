@@ -76,7 +76,8 @@
 
 .menu__nav a {
   display: inline-block;
-  font-size: clamp(3.25rem, 13vw, 9.5rem);
+  /* Cinco opciones: el tamaño también se limita por la altura de la pantalla. */
+  font-size: clamp(2.75rem, min(13vw, 11.5vh), 9.5rem);
   font-weight: var(--weight-bold);
   line-height: 0.95;
   letter-spacing: -0.03em;

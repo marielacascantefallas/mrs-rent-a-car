@@ -1,0 +1,121 @@
+/* Transporte privado: fondo amarillo de marca con texto verde, en ambos modos. */
+.transport {
+  background: var(--brand-yellow);
+  color: var(--brand-green);
+  padding: clamp(96px, 12vw, 160px) var(--gutter);
+}
+
+.transport__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.transport__head {
+  display: grid;
+  gap: 18px;
+  max-width: 52rem;
+}
+
+.transport__title {
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.transport__intro {
+  max-width: 40rem;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+}
+
+/* Tres opciones abiertas, separadas por líneas verticales (sin cards). */
+.transport__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: clamp(48px, 7vw, 88px) 0 0;
+  padding: 0;
+  border-top: 2px solid var(--brand-green);
+}
+
+.transport__item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px clamp(20px, 3vw, 40px) 8px;
+}
+
+.transport__item + .transport__item {
+  border-left: 1.5px solid rgba(31, 63, 31, 0.35);
+}
+
+.transport__item:first-child {
+  padding-left: 0;
+}
+
+.transport__num {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.16em;
+}
+
+.transport__name {
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.transport__text {
+  flex-grow: 1;
+}
+
+.transport__price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: clamp(3rem, 2.2rem + 3vw, 4.5rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.transport__currency {
+  font-size: 0.875rem;
+  letter-spacing: 0.16em;
+}
+
+/* Verde con texto amarillo: contraste alto sobre el fondo amarillo. */
+.btn.transport__cta {
+  align-self: flex-start;
+  margin-top: 8px;
+  background: var(--brand-green);
+  color: var(--brand-yellow);
+}
+
+.btn.transport__cta:hover {
+  background: #163016;
+}
+
+.btn.transport__cta:hover svg {
+  transform: none;
+}
+
+.btn.transport__cta:focus-visible {
+  outline-color: var(--brand-green);
+}
+
+@media (max-width: 860px) {
+  .transport__list {
+    grid-template-columns: 1fr;
+  }
+
+  .transport__item,
+  .transport__item:first-child {
+    padding: 28px 0 32px;
+  }
+
+  .transport__item + .transport__item {
+    border-left: none;
+    border-top: 1.5px solid rgba(31, 63, 31, 0.35);
+  }
+}
