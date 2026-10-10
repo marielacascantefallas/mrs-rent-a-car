@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { BrandIcon } from '../components/BrandIcon';
 import { ArrowLeftIcon, ArrowRightIcon } from '../components/icons';
 import { whatsappMessageUrl } from '../config';
-import { CARS, formatPrice, whatsappMessage } from '../data/cars';
+import { CARS, formatCrc, whatsappMessage } from '../data/cars';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../theme/ThemeContext';
 import './cars.css';
@@ -169,7 +169,13 @@ export function Cars() {
         <div key={car.id} className="cars__details">
           <h3 className="cars__model">{car.name}</h3>
           <p className="cars__specs">{car.specs[lang]}</p>
-          <p className="cars__price">{formatPrice(car, lang)}</p>
+          <p className="cars__price">
+            <span className="cars__price-usd">${car.usd}</span>
+            <span className="cars__price-rest">
+              <span className="cars__price-crc">{formatCrc(car, lang)}</span>
+              <span className="cars__price-unit">{t.perDay}</span>
+            </span>
+          </p>
         </div>
         <a
           className="btn cars__cta"

@@ -67,12 +67,9 @@ export const CARS: Car[] = [
   },
 ];
 
-export function formatPrice(car: Car, lang: Lang) {
-  // Miles con punto en español (₡45.000) y con coma en inglés (₡45,000).
-  const crc = String(car.crc).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
-  return lang === 'es'
-    ? `$${car.usd} · ₡${crc} por día`
-    : `$${car.usd} · ₡${crc} per day`;
+/** Colones con separador de miles: punto en español (₡45.000), coma en inglés (₡45,000). */
+export function formatCrc(car: Car, lang: Lang) {
+  return '₡' + String(car.crc).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
 }
 
 export function whatsappMessage(car: Car, lang: Lang) {

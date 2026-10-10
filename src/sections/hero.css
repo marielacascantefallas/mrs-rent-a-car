@@ -59,6 +59,34 @@
   width: clamp(200px, 30vw, 380px);
 }
 
+/* CTAs bajo el logo, siempre por encima del rastro de fotos */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(28px, 4vw, 44px);
+  padding: 0 var(--gutter);
+}
+
+/* WhatsApp: contorno claro sobre el verde del hero */
+.btn.hero__whatsapp {
+  color: var(--on-dark);
+  border-color: var(--on-dark-detail);
+  background: rgba(31, 63, 31, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.btn.hero__whatsapp:hover {
+  background: var(--on-dark);
+  color: var(--brand-green);
+}
+
+.btn.hero__whatsapp:hover svg {
+  transform: none;
+}
+
 /* Composición fija: solo con prefers-reduced-motion */
 .hero__static {
   display: none;

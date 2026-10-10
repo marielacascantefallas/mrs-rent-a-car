@@ -11,11 +11,30 @@
   margin: 0 auto;
 }
 
-.about__media img {
+/* Los tres vehículos apilados en la misma celda; solo el activo es visible. */
+.about__media {
+  display: grid;
+  align-items: center;
+}
+
+.about__car {
+  grid-area: 1 / 1;
   width: 100%;
   height: auto;
-  /* El Vitara es blanco: una sombra suave lo separa del fondo blanco. */
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  /* Sombra suave para separar los autos claros del fondo blanco. */
   filter: drop-shadow(0 22px 26px rgba(31, 63, 31, 0.22));
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+
+.about__car[data-active='true'] {
+  opacity: 1;
+  transform: none;
 }
 
 .about__text {

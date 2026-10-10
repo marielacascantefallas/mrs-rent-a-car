@@ -9,6 +9,3 @@ export const EMAIL = 'rentacarmrs@gmail.com';
 export function whatsappMessageUrl(message: string) {
   return `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
 }
-
-// Formulario de contacto (cuenta rentacarmrs@gmail.com)
-export const FORMSPREE_URL = 'https://formspree.io/f/mqpeplyb';

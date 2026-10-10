@@ -1,13 +1,12 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { BrandIcon, type Brand } from '../components/BrandIcon';
-import { ArrowRightIcon } from '../components/icons';
-import { FACEBOOK_URL, FORMSPREE_URL, INSTAGRAM_URL, WHATSAPP_URL } from '../config';
+import { FACEBOOK_URL, INSTAGRAM_URL, WHATSAPP_URL, whatsappMessageUrl } from '../config';
 import { CARS } from '../data/cars';
 import { COUNTRIES, OTHER_COUNTRY } from '../data/countries';
 import { useLanguage } from '../i18n/LanguageContext';
 import './contact.css';
 
-type Status = 'idle' | 'sending' | 'success' | 'error';
+type Status = 'idle' | 'opened';
 type Errors = Partial<Record<'nombre' | 'nacionalidad' | 'hasta', string>>;
 
 const SOCIALS: { brand: Brand; href: string; label: string }[] = [
@@ -15,6 +14,12 @@ const SOCIALS: { brand: Brand; href: string; label: string }[] = [
   { brand: 'instagram', href: INSTAGRAM_URL, label: 'Instagram' },
   { brand: 'facebook', href: FACEBOOK_URL, label: 'Facebook' },
 ];
+
+/** 2026-10-24 → 24/10/2026 */
+function formatDate(iso: string) {
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
 
 function todayISO() {
   const d = new Date();
@@ -45,7 +50,7 @@ export function Contact() {
     return e;
   };
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -57,22 +62,25 @@ export function Contact() {
       return;
     }
 
-    setStatus('sending');
-    data.append('_subject', `Nueva consulta de ${data.get('nombre')} · MRS Rent a Car`);
-    data.append('idioma', lang === 'es' ? 'Español' : 'Inglés');
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      setStatus('success');
-      form.reset();
-      setFrom('');
-    } catch {
-      setStatus('error');
-    }
+    // En vez de enviar un correo, se abre WhatsApp con la consulta ya escrita.
+    const value = (name: string) => String(data.get(name) ?? '').trim();
+    const nationality = countries.find((c) => c.value === value('nacionalidad'))?.label;
+    const lines = [
+      t.waGreeting,
+      '',
+      `${t.fieldName}: ${value('nombre')}`,
+      `${t.fieldNationality}: ${nationality}`,
+      `${t.fieldVehicle}: ${value('vehiculo') || t.vehicleAny}`,
+    ];
+    if (value('desde')) lines.push(`${t.fieldFrom}: ${formatDate(value('desde'))}`);
+    if (value('hasta')) lines.push(`${t.fieldTo}: ${formatDate(value('hasta'))}`);
+    if (value('mensaje')) lines.push('', value('mensaje'));
+
+    const url = whatsappMessageUrl(lines.join('\n'));
+    const win = window.open(url, '_blank');
+    if (win) win.opener = null;
+    else window.location.href = url; // si el navegador bloquea la pestaña nueva
+    setStatus('opened');
   };
 
   const fieldError = (name: keyof Errors) =>
@@ -181,12 +189,11 @@ export function Contact() {
 
             <div className="contact__footer">
               <p className="contact__status" role="status" aria-live="polite">
-                {status === 'success' && t.sent}
-                {status === 'error' && t.sendError}
+                {status === 'opened' && t.sent}
               </p>
-              <button type="submit" className="btn btn--outline" disabled={status === 'sending'}>
-                <span>{status === 'sending' ? t.sending : t.send}</span>
-                <ArrowRightIcon size={20} />
+              <button type="submit" className="btn btn--outline">
+                <BrandIcon brand="whatsapp" size={20} />
+                <span>{t.send}</span>
               </button>
             </div>
           </form>

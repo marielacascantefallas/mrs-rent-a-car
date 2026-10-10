@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { BrandIcon } from '../components/BrandIcon';
+import { ArrowRightIcon } from '../components/icons';
 import { Logo } from '../components/Logo';
+import { WHATSAPP_DISPLAY, whatsappMessageUrl } from '../config';
+import { useLanguage } from '../i18n/LanguageContext';
 import './hero.css';
 
 // Fotos de destinos de la zona sur, todas recortadas a 4:3.
@@ -26,6 +30,7 @@ function photoWidth(w: number, h: number) {
 }
 
 export function Hero() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -158,6 +163,21 @@ export function Hero() {
       <div className="hero__logo">
         <h1 className="visually-hidden">MRS Rent a Car</h1>
         <Logo tone="dark" className="hero__logo-img" decorative />
+        <div className="hero__actions">
+          <a href="#cars" className="btn btn--accent">
+            <span>{t.heroCta}</span>
+            <ArrowRightIcon size={20} />
+          </a>
+          <a
+            href={whatsappMessageUrl(t.heroWhatsappMessage)}
+            className="btn hero__whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BrandIcon brand="whatsapp" size={20} />
+            <span>WhatsApp {WHATSAPP_DISPLAY}</span>
+          </a>
+        </div>
       </div>
     </section>
   );
