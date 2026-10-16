@@ -99,7 +99,7 @@ export function Contact() {
     <section id="contact" className="section section--dark contact" data-bg="dark">
       <div className="contact__inner">
         <h2 className="contact__word">
-          <span aria-hidden="true">CONTACT</span>
+          <span aria-hidden="true">{t.contactWord}</span>
           <span className="visually-hidden">{t.contactTitle}</span>
         </h2>
 

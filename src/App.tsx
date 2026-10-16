@@ -4,6 +4,7 @@ import { setupAnchorLinks, setupLayers } from './components/layers';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Cars } from './sections/Cars';
+import { Promos } from './sections/Promos';
 import { Transport } from './sections/Transport';
 import { Faq } from './sections/Faq';
 import { Contact } from './sections/Contact';
@@ -26,6 +27,7 @@ export default function App() {
         <Hero />
         <About />
         <Cars />
+        <Promos />
         <Transport />
         <Faq />
         <Contact />

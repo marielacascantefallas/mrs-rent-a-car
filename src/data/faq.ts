@@ -1,6 +1,7 @@
 import { WHATSAPP_DISPLAY } from '../config';
 import type { Lang } from '../i18n/strings';
 import { CARS, formatCrc } from './cars';
+import { COMBO_MIN_DAYS, COMBO_PICKUP_USD, EARLY_DAYS, EARLY_DISCOUNT, PROMO_5_DAYS_USD } from './promos';
 import { TRANSPORT_OPTIONS } from './transport';
 
 // Requisitos y condiciones confirmados por MRS Rent a Car. Si cambian, se actualizan aquí
@@ -86,6 +87,10 @@ export function faqs(lang: Lang): Faq[] {
           '.',
       },
       {
+        q: '¿Tienen promociones?',
+        a: `Sí: 5 días de alquiler por $${PROMO_5_DAYS_USD} en cualquier vehículo; paga 6 días y te regalamos el séptimo; recogida en el Aeropuerto Juan Santamaría por $${COMBO_PICKUP_USD} al alquilar ${COMBO_MIN_DAYS} días o más; y ${EARLY_DISCOUNT}% de descuento reservando con ${EARLY_DAYS} días de anticipación. No son acumulables.`,
+      },
+      {
         q: '¿Tienen transporte al Aeropuerto Juan Santamaría?',
         a: `Sí. Ofrecemos transporte privado entre Pérez Zeledón y el Aeropuerto Internacional Juan Santamaría (SJO): recogida en el aeropuerto ${usd(pickup)}, traslado al aeropuerto ${usd(dropoff)} e ida y vuelta ${usd(round)}, precio por viaje.`,
       },
@@ -119,6 +124,10 @@ export function faqs(lang: Lang): Faq[] {
         `From ${usd(byPrice[0].usd)} per day. ` +
         byPrice.map((c) => `${c.name}: ${usd(c.usd)} (${formatCrc(c, lang)}) per day`).join('; ') +
         '.',
+    },
+    {
+      q: 'Do you have any deals?',
+      a: `Yes: a 5-day rental for $${PROMO_5_DAYS_USD} on any vehicle; pay 6 days and the seventh is free; Juan Santamaría Airport pickup for $${COMBO_PICKUP_USD} with a rental of ${COMBO_MIN_DAYS} days or more; and ${EARLY_DISCOUNT}% off when you book ${EARLY_DAYS} days in advance. Deals cannot be combined.`,
     },
     {
       q: 'Do you offer transportation to Juan Santamaría Airport?',

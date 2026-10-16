@@ -15,7 +15,7 @@ type MenuProps = {
 };
 
 export function Menu({ open, onClose }: MenuProps) {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -97,7 +97,7 @@ export function Menu({ open, onClose }: MenuProps) {
           {NAV.map((item, i) => (
             <li key={item.id} style={{ '--i': i } as React.CSSProperties}>
               <a href={`#${item.id}`} onClick={goTo(item.id)}>
-                {item.label}
+                {item.label[lang]}
               </a>
             </li>
           ))}

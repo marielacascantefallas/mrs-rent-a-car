@@ -41,7 +41,7 @@ export function About() {
         </figure>
 
         <div className="about__text">
-          <p className="eyebrow about__eyebrow">ABOUT</p>
+          <p className="eyebrow about__eyebrow">{t.aboutEyebrow}</p>
           <h2 className="about__title">{t.aboutTitle}</h2>
           <p>{t.aboutP1}</p>
           <p>{t.aboutP2}</p>

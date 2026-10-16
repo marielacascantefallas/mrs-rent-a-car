@@ -8,6 +8,7 @@ import {
   WHATSAPP_URL,
 } from './config';
 import { faqs } from './data/faq';
+import { promos } from './data/promos';
 import { CARS } from './data/cars';
 import { TRANSPORT_OPTIONS } from './data/transport';
 import { strings, type Lang } from './i18n/strings';
@@ -128,6 +129,13 @@ export function structuredData(lang: Lang) {
           image: abs(car.image),
           description: car.specs[lang],
         },
+      })),
+      ...promos(lang).map((p) => ({
+        '@type': 'Offer',
+        name: p.title,
+        description: `${p.text} ${p.terms}`,
+        ...(p.usd ? { price: p.usd, priceCurrency: 'USD' } : {}),
+        offeredBy: { '@id': `${SITE_URL}/#business` },
       })),
       ...TRANSPORT_OPTIONS.map((option) => ({
         '@type': 'Offer',

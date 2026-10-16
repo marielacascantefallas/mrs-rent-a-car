@@ -1,0 +1,132 @@
+/* Promociones: fondo verde de marca, cifras grandes en amarillo. */
+.promos {
+  padding: clamp(96px, 12vw, 160px) var(--gutter);
+}
+
+.promos__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.promos__head {
+  display: grid;
+  gap: 18px;
+  max-width: 52rem;
+}
+
+.promos__eyebrow {
+  color: var(--brand-yellow);
+}
+
+.promos__title {
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.promos__intro {
+  max-width: 38rem;
+  color: var(--on-dark-detail);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+}
+
+.promos__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: clamp(48px, 7vw, 88px) 0 0;
+  padding: 0;
+  border-top: 2px solid var(--brand-yellow);
+}
+
+.promo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px clamp(18px, 2.4vw, 32px) 8px;
+}
+
+.promo + .promo {
+  border-left: 1.5px solid rgba(234, 227, 210, 0.22);
+}
+
+.promo:first-child {
+  padding-left: 0;
+}
+
+.promo__headline {
+  color: var(--brand-yellow);
+  font-size: clamp(3rem, 2rem + 3.4vw, 5rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.promo__title {
+  margin-top: 8px;
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.promo__text {
+  color: var(--on-dark-detail);
+}
+
+.promo__terms {
+  flex-grow: 1;
+  color: var(--on-dark-detail);
+  opacity: 0.8;
+  font-size: 0.875rem;
+}
+
+.btn.promo__cta {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+.btn.promo__cta:hover svg {
+  transform: none;
+}
+
+.promos__note {
+  margin-top: clamp(32px, 4vw, 48px);
+  color: var(--on-dark-detail);
+  opacity: 0.8;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1080px) {
+  .promos__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .promo:nth-child(3) {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .promo:nth-child(n + 3) {
+    border-top: 1.5px solid rgba(234, 227, 210, 0.22);
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .promos__list {
+    grid-template-columns: 1fr;
+  }
+
+  .promo,
+  .promo:first-child {
+    padding: 28px 0 32px;
+    margin-top: 0;
+    border-left: none;
+  }
+
+  .promo + .promo {
+    border-left: none;
+    border-top: 1.5px solid rgba(234, 227, 210, 0.22);
+  }
+}

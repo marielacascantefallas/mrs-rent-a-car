@@ -1,13 +1,14 @@
 export type Lang = 'es' | 'en';
 
-// Las etiquetas del menú son iguales en ambos idiomas (sección 3).
+// Etiquetas del menú y del footer en cada idioma.
 export const NAV = [
-  { id: 'home', label: 'HOME' },
-  { id: 'about', label: 'ABOUT' },
-  { id: 'cars', label: 'CARS' },
-  { id: 'transport', label: 'TRANSPORT' },
-  { id: 'faq', label: 'FAQ' },
-  { id: 'contact', label: 'CONTACT' },
+  { id: 'home', label: { es: 'INICIO', en: 'HOME' } },
+  { id: 'about', label: { es: 'NOSOTROS', en: 'ABOUT' } },
+  { id: 'cars', label: { es: 'VEHÍCULOS', en: 'CARS' } },
+  { id: 'promos', label: { es: 'PROMOCIONES', en: 'DEALS' } },
+  { id: 'transport', label: { es: 'TRANSPORTE', en: 'TRANSPORT' } },
+  { id: 'faq', label: { es: 'PREGUNTAS', en: 'FAQ' } },
+  { id: 'contact', label: { es: 'CONTACTO', en: 'CONTACT' } },
 ] as const;
 
 export const strings = {
@@ -27,6 +28,14 @@ export const strings = {
       'Conocemos los caminos del cantón y respaldamos cada viaje con atención local, puntualidad y la transparencia que necesitas para manejar con tranquilidad.',
     aboutCta: 'Ver vehículos',
     heroTagline: 'Rent a car y transporte al aeropuerto en Pérez Zeledón',
+    aboutEyebrow: 'NOSOTROS',
+    contactWord: 'CONTACTO',
+    promosEyebrow: 'PROMOCIONES',
+    promosTitle: 'Promociones de alquiler de carros en Pérez Zeledón.',
+    promosIntro: 'Más días, mejor precio. Escríbenos por WhatsApp para aplicar la promoción a tu reserva.',
+    promosCta: 'Pedir esta promo',
+    promosMessage: 'Hola, quiero la promoción: {promo}.',
+    promosNote: 'Precios en dólares. Promociones no acumulables entre sí y sujetas a disponibilidad.',
     faqEyebrow: 'REQUISITOS Y PREGUNTAS FRECUENTES',
     faqTitle: 'Requisitos para alquilar un carro en Pérez Zeledón.',
     faqQuestionsTitle: 'Preguntas frecuentes',
@@ -91,6 +100,14 @@ export const strings = {
       'We know the roads of the canton and back every trip with local support, punctuality and the transparency you need to drive with peace of mind.',
     aboutCta: 'See vehicles',
     heroTagline: 'Car rental and airport transfers in Pérez Zeledón',
+    aboutEyebrow: 'ABOUT',
+    contactWord: 'CONTACT',
+    promosEyebrow: 'DEALS',
+    promosTitle: 'Car rental deals in Pérez Zeledón.',
+    promosIntro: 'More days, better price. Message us on WhatsApp to apply the deal to your booking.',
+    promosCta: 'Get this deal',
+    promosMessage: 'Hi, I would like the deal: {promo}.',
+    promosNote: 'Prices in US dollars. Deals cannot be combined and are subject to availability.',
     faqEyebrow: 'REQUIREMENTS AND FAQ',
     faqTitle: 'Requirements to rent a car in Pérez Zeledón.',
     faqQuestionsTitle: 'Frequently asked questions',

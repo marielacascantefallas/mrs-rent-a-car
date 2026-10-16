@@ -1,4 +1,6 @@
 .contact {
+  /* Tamaño de la palabra gigante: "CONTACTO" (español) es una letra más larga. */
+  --word: clamp(3rem, 18.6vw, 16.4rem);
   padding: clamp(96px, 12vw, 150px) 0 clamp(72px, 9vw, 120px);
   overflow: hidden;
 }
@@ -10,7 +12,7 @@
 
 /* Palabra gigante en crema, casi todo el ancho */
 .contact__word {
-  font-size: clamp(3rem, 18.6vw, 16.4rem);
+  font-size: var(--word);
   font-weight: var(--weight-bold);
   line-height: 0.8;
   letter-spacing: -0.05em;
@@ -24,7 +26,7 @@
 .contact__panel {
   position: relative;
   width: min(100%, 760px);
-  margin: calc(clamp(3rem, 18.6vw, 16.4rem) * -0.32) 0 0 auto;
+  margin: calc(var(--word) * -0.32) 0 0 auto;
   padding: clamp(28px, 4vw, 48px);
   background: var(--brand-yellow);
   color: var(--brand-green);
@@ -198,6 +200,10 @@
   }
 
   .contact__panel {
-    margin-top: calc(clamp(3rem, 18.6vw, 16.4rem) * -0.18);
+    margin-top: calc(var(--word) * -0.18);
   }
+}
+
+:root[lang='es'] .contact {
+  --word: clamp(2.6rem, 16.2vw, 14.3rem);
 }

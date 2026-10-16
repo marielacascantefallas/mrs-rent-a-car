@@ -47,7 +47,7 @@ function useNear(ref: React.RefObject<HTMLElement>, margin = '600px') {
 }
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const { theme } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const near = useNear(ref);
@@ -82,7 +82,7 @@ export function Footer() {
           <ul>
             {NAV.map((item) => (
               <li key={item.id}>
-                <a href={`#${item.id}`}>{item.label}</a>
+                <a href={`#${item.id}`}>{item.label[lang]}</a>
               </li>
             ))}
           </ul>
