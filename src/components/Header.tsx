@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { LANG_PATH } from '../seo';
+import { usePage } from '../page';
+import { pathFor, sectionHref } from '../routes';
 import { useTheme } from '../theme/ThemeContext';
 import { Logo } from './Logo';
 import { Menu } from './Menu';
@@ -11,6 +12,7 @@ import './header.css';
 export function Header() {
   const { lang, setLang, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const page = usePage();
   const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,13 +29,13 @@ export function Header() {
   return (
     <>
       <header ref={headerRef} className="header glass" data-tone={tone}>
-        <a href="#home" className="header__logo">
+        <a href={sectionHref(page, lang, 'home')} className="header__logo">
           <Logo tone={tone === 'dark' ? 'dark' : 'light'} height={38} />
         </a>
         <div className="header__controls">
           <div className="lang" role="group" aria-label={t.langSwitch}>
             <a
-              href={LANG_PATH.es}
+              href={pathFor(page, 'es')}
               hrefLang="es"
               lang="es"
               className="lang__opt"
@@ -50,7 +52,7 @@ export function Header() {
               /
             </span>
             <a
-              href={LANG_PATH.en}
+              href={pathFor(page, 'en')}
               hrefLang="en"
               lang="en"
               className="lang__opt"

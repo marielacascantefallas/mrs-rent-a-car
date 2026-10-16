@@ -83,6 +83,8 @@ export const strings = {
     footerPlace: 'Rent a car en Pérez Zeledón, San José, Costa Rica',
     footerSections: 'Secciones',
     footerContact: 'Contacto',
+    footerServices: 'Alquiler y transporte',
+    footerTransportLink: 'Transporte al Aeropuerto Juan Santamaría',
   },
   en: {
     skipToContent: 'Skip to content',
@@ -155,6 +157,8 @@ export const strings = {
     footerPlace: 'Car rental in Pérez Zeledón, San José, Costa Rica',
     footerSections: 'Sections',
     footerContact: 'Contact',
+    footerServices: 'Rentals and transfers',
+    footerTransportLink: 'Juan Santamaría Airport transfer',
   },
 } satisfies Record<Lang, Record<string, string>>;
 

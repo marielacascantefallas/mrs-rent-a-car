@@ -253,3 +253,13 @@
     transition: none;
   }
 }
+
+/* Enlace a la página propia del vehículo */
+.cars__details {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--car-ink);
+  font-weight: var(--weight-bold);
+  text-underline-offset: 4px;
+}

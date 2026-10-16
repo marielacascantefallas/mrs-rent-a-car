@@ -9,6 +9,11 @@ export type Car = {
   short: string;
   /** Nombre completo con año */
   name: string;
+  /** Parte de la URL de su página propia */
+  slug: string;
+  color: Record<Lang, string>;
+  /** Texto de su página propia */
+  intro: Record<Lang, string>;
   image: string;
   specs: Record<Lang, string>;
   usd: number;
@@ -24,6 +29,12 @@ export const CARS: Car[] = [
     id: 'vitara',
     short: 'VITARA',
     name: 'Suzuki Grand Vitara 2019',
+    slug: 'suzuki-grand-vitara',
+    color: { es: 'Blanco', en: 'White' },
+    intro: {
+      es: 'SUV automático con tracción 4WD: cómodo en la ciudad y listo para los caminos de montaña de la zona sur, como la subida hacia el Chirripó o la bajada a la costa del Pacífico.',
+      en: 'Automatic SUV with 4WD: comfortable in town and ready for the mountain roads of the southern zone, like the drive up toward Chirripó or down to the Pacific coast.',
+    },
     image: vitara,
     specs: {
       es: 'Automático · 4WD · Gasolina',
@@ -38,6 +49,12 @@ export const CARS: Car[] = [
     id: 'accent',
     short: 'ACCENT',
     name: 'Hyundai Accent 2019',
+    slug: 'hyundai-accent',
+    color: { es: 'Gris', en: 'Gray' },
+    intro: {
+      es: 'Sedán automático, práctico y cómodo para moverte por San Isidro de El General, la carretera Interamericana y los pueblos de la zona sur.',
+      en: 'Automatic sedan, practical and comfortable for getting around San Isidro de El General, the Inter-American Highway and the towns of the southern zone.',
+    },
     image: accent,
     specs: {
       es: 'Automático · Gasolina',
@@ -54,6 +71,12 @@ export const CARS: Car[] = [
     id: 'pathfinder',
     short: 'PATHFINDER',
     name: 'Nissan Pathfinder 2004',
+    slug: 'nissan-pathfinder',
+    color: { es: 'Café claro', en: 'Light brown' },
+    intro: {
+      es: 'SUV de transmisión manual con tracción 4WD: robusto para caminos rurales y de lastre, y la opción de mejor precio para recorrer la zona sur.',
+      en: 'Manual-transmission SUV with 4WD: sturdy on rural and gravel roads, and the best-priced option for exploring the southern zone.',
+    },
     image: pathfinder,
     specs: {
       es: 'Manual · 4WD · Gasolina',

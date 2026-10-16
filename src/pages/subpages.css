@@ -1,0 +1,301 @@
+/* Páginas propias: vehículos y transporte al aeropuerto. */
+.sub {
+  padding: clamp(120px, 12vw, 160px) var(--gutter) clamp(80px, 10vw, 140px);
+}
+
+.sub + .sub {
+  padding-top: clamp(80px, 10vw, 140px);
+}
+
+.sub__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Inicio / página actual */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: var(--weight-bold);
+}
+
+.breadcrumb li + li::before {
+  content: '/';
+  margin-right: 8px;
+  opacity: 0.6;
+}
+
+.breadcrumb a {
+  color: inherit;
+}
+
+.sub__eyebrow {
+  margin-bottom: 16px;
+}
+
+.sub__title {
+  max-width: 18ch;
+  font-size: clamp(2.5rem, 1.4rem + 4.4vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.sub__intro {
+  max-width: 40rem;
+  margin-top: 20px;
+  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.1875rem);
+}
+
+.sub__h2 {
+  max-width: 24ch;
+  font-size: clamp(2rem, 1.3rem + 2.8vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.sub__lead {
+  max-width: 40rem;
+  margin: 20px 0 28px;
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+}
+
+/* Columnas abiertas separadas por líneas (sin cards), como en el resto del sitio */
+.sub__cols {
+  display: grid;
+  list-style: none;
+  margin: clamp(32px, 5vw, 56px) 0 0;
+  padding: 0;
+  border-top: 2px solid currentColor;
+}
+
+.sub__cols > li {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 28px clamp(16px, 2.4vw, 32px) 8px;
+}
+
+.sub__cols > li:first-child {
+  padding-left: 0;
+}
+
+.sub__cols > li + li {
+  border-left: 1.5px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.sub__cols--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sub__cols--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sub__cols--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+.sub__item-title {
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+}
+
+.sub__muted {
+  color: var(--on-light-muted);
+}
+
+.sub__step-num {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.16em;
+}
+
+.sub--promos .sub__h2 {
+  color: var(--brand-cream);
+}
+
+.sub--promos .sub__cols {
+  border-top-color: var(--brand-yellow);
+}
+
+.sub__big {
+  color: var(--brand-yellow);
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.sub--promos p {
+  color: var(--on-dark-detail);
+}
+
+.sub__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  margin-top: 20px;
+  color: inherit;
+  font-weight: var(--weight-bold);
+}
+
+/* Ficha del vehículo */
+.sub--car {
+  background: var(--cars-bg, var(--surface-light));
+}
+
+.sub--car .sub__title,
+.sub--car .carpage__price {
+  color: var(--car-ink);
+}
+
+.carpage__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  margin-top: clamp(24px, 4vw, 48px);
+}
+
+.carpage__img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 26px 30px rgba(31, 63, 31, 0.25));
+}
+
+.carpage__panel {
+  display: grid;
+  gap: 20px;
+}
+
+.carpage__price {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.carpage__usd {
+  font-size: clamp(3.25rem, 2.4rem + 3.2vw, 5rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.carpage__rest {
+  display: grid;
+  gap: 4px;
+  padding-left: 14px;
+  border-left: 2px solid currentColor;
+}
+
+.carpage__crc {
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+}
+
+.carpage__unit {
+  font-size: 0.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.carpage__specs-title {
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.carpage__specs {
+  margin: 0;
+  border-top: 2px solid currentColor;
+}
+
+.carpage__specs div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1.5px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.carpage__specs dt {
+  font-weight: var(--weight-bold);
+}
+
+.carpage__specs dd {
+  margin: 0;
+  text-align: right;
+}
+
+.btn.carpage__cta {
+  justify-self: start;
+  background: var(--car-ink);
+  color: var(--cars-bg);
+}
+
+.btn.carpage__cta:hover svg {
+  transform: none;
+}
+
+/* Otros vehículos */
+.other-car {
+  display: grid;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.other-car img {
+  width: min(100%, 520px);
+  height: auto;
+  filter: drop-shadow(0 18px 22px rgba(31, 63, 31, 0.2));
+  transition: transform var(--dur-fast) ease;
+}
+
+.other-car:hover img {
+  transform: translateX(6px);
+}
+
+.other-car__name {
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  font-weight: var(--weight-bold);
+}
+
+.other-car__meta {
+  color: var(--on-light-muted);
+}
+
+.other-car .sub__link {
+  margin-top: 4px;
+}
+
+.transport .breadcrumb {
+  color: var(--brand-green);
+}
+
+@media (max-width: 960px) {
+  .carpage__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sub__cols--5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .sub__cols--2,
+  .sub__cols--3,
+  .sub__cols--5 {
+    grid-template-columns: 1fr;
+  }
+
+  .sub__cols > li,
+  .sub__cols > li:first-child {
+    padding: 24px 0;
+  }
+
+  .sub__cols > li + li {
+    border-left: none;
+    border-top: 1.5px solid color-mix(in srgb, currentColor 25%, transparent);
+  }
+}

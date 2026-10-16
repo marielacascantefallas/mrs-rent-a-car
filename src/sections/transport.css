@@ -123,3 +123,13 @@
     border-top: 1.5px solid rgba(31, 63, 31, 0.35);
   }
 }
+
+.transport__more {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--brand-green);
+  font-weight: var(--weight-bold);
+  text-underline-offset: 4px;
+}

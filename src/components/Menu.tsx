@@ -5,6 +5,8 @@ import { NAV } from '../i18n/strings';
 import { useLanguage } from '../i18n/LanguageContext';
 import { BrandIcon } from './BrandIcon';
 import { scrollToSection } from './layers';
+import { usePage } from '../page';
+import { sectionHref } from '../routes';
 import { Logo } from './Logo';
 import { CloseIcon } from './icons';
 import './menu.css';
@@ -16,6 +18,7 @@ type MenuProps = {
 
 export function Menu({ open, onClose }: MenuProps) {
   const { lang, t } = useLanguage();
+  const page = usePage();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -57,6 +60,8 @@ export function Menu({ open, onClose }: MenuProps) {
   }, [open, onClose]);
 
   const goTo = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Desde otras páginas, el enlace lleva a la sección de la página principal.
+    if (page !== 'home') return;
     e.preventDefault();
     onClose();
     // Libera el scroll ya (el efecto de cierre corre después) y luego se desplaza.
@@ -96,7 +101,7 @@ export function Menu({ open, onClose }: MenuProps) {
         <ul>
           {NAV.map((item, i) => (
             <li key={item.id} style={{ '--i': i } as React.CSSProperties}>
-              <a href={`#${item.id}`} onClick={goTo(item.id)}>
+              <a href={sectionHref(page, lang, item.id)} onClick={goTo(item.id)}>
                 {item.label[lang]}
               </a>
             </li>

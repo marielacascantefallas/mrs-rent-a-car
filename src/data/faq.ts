@@ -139,3 +139,59 @@ export function faqs(lang: Lang): Faq[] {
     },
   ];
 }
+
+/** Preguntas de la página de transporte al aeropuerto. */
+export function transportFaqs(lang: Lang): Faq[] {
+  const [pickup, dropoff, round] = TRANSPORT_OPTIONS.map((o) => o.usd);
+  if (lang === 'es') {
+    return [
+      {
+        q: '¿Cuánto cuesta el transporte del Aeropuerto Juan Santamaría a Pérez Zeledón?',
+        a: `La recogida en el Aeropuerto Juan Santamaría (SJO) con traslado a Pérez Zeledón cuesta $${pickup} por viaje.`,
+      },
+      {
+        q: '¿Cuánto cuesta el traslado de Pérez Zeledón al aeropuerto?',
+        a: `El traslado desde Pérez Zeledón hasta el Aeropuerto Juan Santamaría cuesta $${dropoff} por viaje.`,
+      },
+      {
+        q: '¿Cuánto cuesta ida y vuelta?',
+        a: `Ida y vuelta entre Pérez Zeledón y el Aeropuerto Juan Santamaría cuesta $${round}.`,
+      },
+      {
+        q: '¿El precio es por persona?',
+        a: 'No. El precio es por viaje.',
+      },
+      {
+        q: '¿Hay descuento si también alquilo un carro?',
+        a: `Sí. Si alquilas un carro por ${COMBO_MIN_DAYS} días o más, la recogida en el aeropuerto cuesta $${COMBO_PICKUP_USD} en vez de $${pickup}.`,
+      },
+      {
+        q: '¿Cómo reservo el transporte?',
+        a: `Escríbenos por WhatsApp al ${WHATSAPP_DISPLAY} con la fecha, la hora y el lugar de recogida.`,
+      },
+    ];
+  }
+  return [
+    {
+      q: 'How much is transportation from Juan Santamaría Airport to Pérez Zeledón?',
+      a: `Pickup at Juan Santamaría Airport (SJO) with a ride to Pérez Zeledón costs $${pickup} per trip.`,
+    },
+    {
+      q: 'How much is the ride from Pérez Zeledón to the airport?',
+      a: `The ride from Pérez Zeledón to Juan Santamaría Airport costs $${dropoff} per trip.`,
+    },
+    {
+      q: 'How much is a round trip?',
+      a: `A round trip between Pérez Zeledón and Juan Santamaría Airport costs $${round}.`,
+    },
+    { q: 'Is the price per person?', a: 'No. The price is per trip.' },
+    {
+      q: 'Is there a discount if I also rent a car?',
+      a: `Yes. If you rent a car for ${COMBO_MIN_DAYS} days or more, the airport pickup costs $${COMBO_PICKUP_USD} instead of $${pickup}.`,
+    },
+    {
+      q: 'How do I book the transfer?',
+      a: `Message us on WhatsApp at ${WHATSAPP_DISPLAY} with the date, time and pickup location.`,
+    },
+  ];
+}

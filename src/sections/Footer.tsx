@@ -11,6 +11,9 @@ import {
 import { NAV } from '../i18n/strings';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../theme/ThemeContext';
+import { usePage } from '../page';
+import { CARS } from '../data/cars';
+import { pathFor, sectionHref } from '../routes';
 import './footer.css';
 
 const FooterGradient = lazy(() => import('./FooterGradient'));
@@ -48,6 +51,7 @@ function useNear(ref: React.RefObject<HTMLElement>, margin = '600px') {
 
 export function Footer() {
   const { lang, t } = useLanguage();
+  const page = usePage();
   const { theme } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const near = useNear(ref);
@@ -60,7 +64,7 @@ export function Footer() {
     <footer ref={ref} className="footer" data-bg="light">
       <div className="footer__content">
         <div className="footer__brand">
-          <a href="#home" className="footer__logo" aria-label="MRS Rent a Car">
+          <a href={sectionHref(page, lang, 'home')} className="footer__logo" aria-label="MRS Rent a Car">
             <Logo tone={theme === 'dark' ? 'dark' : 'light'} height={72} decorative />
           </a>
           <p className="footer__place">{t.footerPlace}</p>
@@ -82,9 +86,25 @@ export function Footer() {
           <ul>
             {NAV.map((item) => (
               <li key={item.id}>
-                <a href={`#${item.id}`}>{item.label[lang]}</a>
+                <a href={sectionHref(page, lang, item.id)}>{item.label[lang]}</a>
               </li>
             ))}
+          </ul>
+        </nav>
+
+        <nav className="footer__col" aria-labelledby="footer-services">
+          <h2 id="footer-services" className="footer__heading">
+            {t.footerServices}
+          </h2>
+          <ul>
+            {CARS.map((c) => (
+              <li key={c.id}>
+                <a href={pathFor(`car:${c.id}`, lang)}>{c.name}</a>
+              </li>
+            ))}
+            <li>
+              <a href={pathFor('transport', lang)}>{t.footerTransportLink}</a>
+            </li>
           </ul>
         </nav>
 

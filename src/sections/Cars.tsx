@@ -5,6 +5,8 @@ import { whatsappMessageUrl } from '../config';
 import { CARS, formatCrc, whatsappMessage } from '../data/cars';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../theme/ThemeContext';
+import { pageStrings } from '../i18n/pages';
+import { pathFor } from '../routes';
 import './cars.css';
 
 const COUNT = CARS.length;
@@ -185,6 +187,9 @@ export function Cars() {
         >
           <BrandIcon brand="whatsapp" size={20} />
           <span>{t.carsCta}</span>
+        </a>
+        <a className="cars__details" href={pathFor(`car:${car.id}`, lang)}>
+          {pageStrings[lang].seeDetails}
         </a>
       </div>
     </section>

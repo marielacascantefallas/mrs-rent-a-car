@@ -2,10 +2,12 @@ import { BrandIcon } from '../components/BrandIcon';
 import { whatsappMessageUrl } from '../config';
 import { TRANSPORT_OPTIONS } from '../data/transport';
 import { useLanguage } from '../i18n/LanguageContext';
+import { pageStrings } from '../i18n/pages';
+import { pathFor } from '../routes';
 import './transport.css';
 
 export function Transport() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   const copy = {
     pickup: { title: t.transportPickupTitle, text: t.transportPickupText },
@@ -27,6 +29,9 @@ export function Transport() {
             {t.transportTitle}
           </h2>
           <p className="transport__intro">{t.transportIntro}</p>
+          <a className="transport__more" href={pathFor('transport', lang)}>
+            {pageStrings[lang].moreInfo}
+          </a>
         </header>
 
         <ol className="transport__list">

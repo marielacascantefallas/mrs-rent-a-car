@@ -7,7 +7,8 @@ import {
   WHATSAPP_DISPLAY,
   WHATSAPP_URL,
 } from './config';
-import { faqs } from './data/faq';
+import { faqs, transportFaqs } from './data/faq';
+import { carFor, PAGES, pathFor, routeFromPath, type PageId } from './routes';
 import { promos } from './data/promos';
 import { CARS } from './data/cars';
 import { TRANSPORT_OPTIONS } from './data/transport';
@@ -16,12 +17,7 @@ import { strings, type Lang } from './i18n/strings';
 // Dominio oficial: todas las URLs canónicas, el sitemap y los datos estructurados usan este.
 export const SITE_URL = 'https://mrsrentacar.com';
 
-/** Cada idioma vive en su propia URL para que Google indexe ambas versiones. */
-export const LANG_PATH: Record<Lang, string> = { es: '/', en: '/en/' };
-
-export function langFromPath(pathname: string): Lang {
-  return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'es';
-}
+export { pathFor, routeFromPath, PAGES };
 
 const SEO = {
   es: {
@@ -40,8 +36,47 @@ const SEO = {
   },
 } as const;
 
-export function seoFor(lang: Lang) {
-  return SEO[lang];
+/** Título, descripción y textos para compartir de cada página en cada idioma. */
+export type PageSeo = {
+  title: string;
+  description: string;
+  ogLocale: string;
+  ogImageAlt: string;
+  image?: string;
+};
+
+export function seoFor(page: PageId, lang: Lang): PageSeo {
+  const base = SEO[lang];
+  const car = carFor(page);
+  if (car) {
+    return {
+      ...base,
+      title:
+        lang === 'es'
+          ? `Alquiler de ${car.name} en Pérez Zeledón | MRS Rent a Car`
+          : `${car.name} Rental in Pérez Zeledón | MRS Rent a Car`,
+      description:
+        lang === 'es'
+          ? `Alquila un ${car.name} en Pérez Zeledón por $${car.usd} por día (${car.specs.es}). Sin tarjeta de crédito. Reserva por WhatsApp con MRS Rent a Car.`
+          : `Rent a ${car.name} in Pérez Zeledón for $${car.usd} per day (${car.specs.en}). No credit card needed. Book on WhatsApp with MRS Rent a Car.`,
+      ogImageAlt: car.name,
+      image: abs(car.image),
+    };
+  }
+  if (page === 'transport') {
+    return {
+      ...base,
+      title:
+        lang === 'es'
+          ? 'Transporte al Aeropuerto Juan Santamaría desde Pérez Zeledón | MRS'
+          : 'Juan Santamaría Airport Transfer from Pérez Zeledón | MRS',
+      description:
+        lang === 'es'
+          ? 'Transporte privado entre Pérez Zeledón y el Aeropuerto Juan Santamaría (SJO): recogida $190, traslado $190, ida y vuelta $380, precio por viaje. Reserva por WhatsApp.'
+          : 'Private transfers between Pérez Zeledón and Juan Santamaría Airport (SJO): pickup $190, drop-off $190, round trip $380, price per trip. Book on WhatsApp.',
+    };
+  }
+  return { ...base };
 }
 
 const abs = (path: string) => (path.startsWith('http') ? path : SITE_URL + path);
@@ -50,9 +85,11 @@ const escapeAttr = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 /** Datos estructurados (schema.org) del negocio, sus carros y sus traslados. */
-export function structuredData(lang: Lang) {
+export function structuredData(page: PageId, lang: Lang) {
   const t = strings[lang];
-  const url = SITE_URL + LANG_PATH[lang];
+  const url = SITE_URL + pathFor(page, lang);
+  const homeUrl = SITE_URL + pathFor('home', lang);
+  const seo = seoFor(page, lang);
   const perDay = lang === 'es' ? 'por día' : 'per day';
   const transportNames = {
     pickup: t.transportPickupTitle,
@@ -71,7 +108,7 @@ export function structuredData(lang: Lang) {
     name: 'MRS Rent a Car',
     alternateName: lang === 'es' ? 'MRS Alquiler de Carros' : 'MRS Car Rental',
     description: SEO[lang].description,
-    url,
+    url: homeUrl,
     logo: `${SITE_URL}/logo.png`,
     image: `${SITE_URL}/og-image.jpg`,
     telephone: WHATSAPP_DISPLAY,
@@ -169,46 +206,130 @@ export function structuredData(lang: Lang) {
     publisher: { '@id': `${SITE_URL}/#business` },
   };
 
-  const page = {
+  const webPage = {
     '@type': 'WebPage',
     '@id': `${url}#webpage`,
     url,
-    name: SEO[lang].title,
-    description: SEO[lang].description,
+    name: seo.title,
+    description: seo.description,
     inLanguage: lang,
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': `${SITE_URL}/#business` },
-    primaryImageOfPage: `${SITE_URL}/og-image.jpg`,
+    primaryImageOfPage: seo.image ?? `${SITE_URL}/og-image.jpg`,
   };
 
-  const faqPage = {
+  const faqPage = (list: { q: string; a: string }[]) => ({
     '@type': 'FAQPage',
     '@id': `${url}#faq`,
     inLanguage: lang,
-    mainEntity: faqs(lang).map((f) => ({
+    mainEntity: list.map((f) => ({
       '@type': 'Question',
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
-  };
+  });
 
-  return { '@context': 'https://schema.org', '@graph': [business, website, page, faqPage] };
+  const home = lang === 'es' ? 'Inicio' : 'Home';
+  const breadcrumb = (name: string) => ({
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: home, item: homeUrl },
+      { '@type': 'ListItem', position: 2, name, item: url },
+    ],
+  });
+
+  const car = carFor(page);
+  if (car) {
+    const carNode = {
+      '@type': 'Car',
+      '@id': `${url}#car`,
+      name: car.name,
+      brand: { '@type': 'Brand', name: car.name.split(' ')[0] },
+      model: car.name.replace(/^\S+\s/, '').replace(/\s\d{4}$/, ''),
+      vehicleModelDate: car.name.match(/\d{4}$/)?.[0],
+      color: car.color[lang],
+      vehicleTransmission: car.specs.es.startsWith('Automático')
+        ? lang === 'es' ? 'Automática' : 'Automatic'
+        : lang === 'es' ? 'Manual' : 'Manual',
+      fuelType: lang === 'es' ? 'Gasolina' : 'Gasoline',
+      ...(car.specs.es.includes('4WD') ? { driveWheelConfiguration: 'https://schema.org/FourWheelDriveConfiguration' } : {}),
+      image: abs(car.image),
+      description: car.intro[lang],
+      offers: {
+        '@type': 'Offer',
+        price: car.usd,
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: car.usd,
+          priceCurrency: 'USD',
+          unitCode: 'DAY',
+          unitText: perDay,
+        },
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': `${SITE_URL}/#business` },
+      },
+    };
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [business, website, webPage, carNode, breadcrumb(car.name)],
+    };
+  }
+
+  if (page === 'transport') {
+    const service = {
+      '@type': 'Service',
+      '@id': `${url}#service`,
+      serviceType: lang === 'es' ? 'Transporte privado al aeropuerto' : 'Private airport transfer',
+      name: seo.title,
+      description: seo.description,
+      provider: { '@id': `${SITE_URL}/#business` },
+      areaServed: ['Pérez Zeledón', 'San Isidro de El General', t.transportAirport],
+      offers: TRANSPORT_OPTIONS.map((option) => ({
+        '@type': 'Offer',
+        name: transportNames[option.id],
+        price: option.usd,
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: option.usd,
+          priceCurrency: 'USD',
+          unitText: t.transportUnit,
+        },
+      })),
+    };
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        business,
+        website,
+        webPage,
+        service,
+        breadcrumb(lang === 'es' ? 'Transporte al aeropuerto' : 'Airport transfer'),
+        faqPage(transportFaqs(lang)),
+      ],
+    };
+  }
+
+  return { '@context': 'https://schema.org', '@graph': [business, website, webPage, faqPage(faqs(lang))] };
 }
 
 /** Etiquetas del <head> para cada idioma (se escriben en el HTML pregenerado). */
-export function headTags(lang: Lang) {
-  const seo = SEO[lang];
-  const url = SITE_URL + LANG_PATH[lang];
+export function headTags(page: PageId, lang: Lang) {
+  const seo = seoFor(page, lang);
+  const url = SITE_URL + pathFor(page, lang);
   const other: Lang = lang === 'es' ? 'en' : 'es';
-  const json = JSON.stringify(structuredData(lang)).replace(/</g, '\\u003c');
+  const image = seo.image ?? `${SITE_URL}/og-image.jpg`;
+  const json = JSON.stringify(structuredData(page, lang)).replace(/</g, '\\u003c');
   return [
     `<title>${escapeAttr(seo.title)}</title>`,
     `<meta name="description" content="${escapeAttr(seo.description)}" />`,
     `<meta name="robots" content="index, follow, max-image-preview:large" />`,
     `<link rel="canonical" href="${url}" />`,
-    `<link rel="alternate" hreflang="es" href="${SITE_URL}${LANG_PATH.es}" />`,
-    `<link rel="alternate" hreflang="en" href="${SITE_URL}${LANG_PATH.en}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${SITE_URL}${LANG_PATH.es}" />`,
+    `<link rel="alternate" hreflang="es" href="${SITE_URL}${pathFor(page, 'es')}" />`,
+    `<link rel="alternate" hreflang="en" href="${SITE_URL}${pathFor(page, 'en')}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${SITE_URL}${pathFor(page, 'es')}" />`,
     `<meta name="geo.region" content="CR-SJ" />`,
     `<meta name="geo.placename" content="Pérez Zeledón, San José, Costa Rica" />`,
     `<meta property="og:type" content="website" />`,
@@ -218,14 +339,15 @@ export function headTags(lang: Lang) {
     `<meta property="og:description" content="${escapeAttr(seo.description)}" />`,
     `<meta property="og:locale" content="${seo.ogLocale}" />`,
     `<meta property="og:locale:alternate" content="${SEO[other].ogLocale}" />`,
-    `<meta property="og:image" content="${SITE_URL}/og-image.jpg" />`,
-    `<meta property="og:image:width" content="1200" />`,
-    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image" content="${image}" />`,
+    ...(seo.image
+      ? []
+      : [`<meta property="og:image:width" content="1200" />`, `<meta property="og:image:height" content="630" />`]),
     `<meta property="og:image:alt" content="${escapeAttr(seo.ogImageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeAttr(seo.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttr(seo.description)}" />`,
-    `<meta name="twitter:image" content="${SITE_URL}/og-image.jpg" />`,
+    `<meta name="twitter:image" content="${image}" />`,
     `<script type="application/ld+json">${json}</script>`,
     ...(GOOGLE_SITE_VERIFICATION
       ? [`<meta name="google-site-verification" content="${escapeAttr(GOOGLE_SITE_VERIFICATION)}" />`]
@@ -233,23 +355,23 @@ export function headTags(lang: Lang) {
   ].join('\n    ');
 }
 
-/** sitemap.xml con ambas versiones del sitio enlazadas entre sí. */
+/** sitemap.xml con todas las páginas, cada una enlazada con su versión en el otro idioma. */
 export function sitemap(lastmod: string) {
-  const links = (['es', 'en'] as Lang[])
-    .map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}${LANG_PATH[l]}" />`)
-    .concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${LANG_PATH.es}" />`)
-    .join('\n');
-  const entries = (['es', 'en'] as Lang[])
-    .map(
+  const entries = PAGES.flatMap((page) => {
+    const links = (['es', 'en'] as Lang[])
+      .map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}${pathFor(page, l)}" />`)
+      .concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${pathFor(page, 'es')}" />`)
+      .join('\n');
+    return (['es', 'en'] as Lang[]).map(
       (l) => `  <url>
-    <loc>${SITE_URL}${LANG_PATH[l]}</loc>
+    <loc>${SITE_URL}${pathFor(page, l)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${l === 'es' ? '1.0' : '0.9'}</priority>
+    <priority>${page === 'home' ? (l === 'es' ? '1.0' : '0.9') : '0.8'}</priority>
 ${links}
   </url>`,
-    )
-    .join('\n');
+    );
+  }).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${entries}
